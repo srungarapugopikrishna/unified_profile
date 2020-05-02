@@ -25,7 +25,7 @@ SECRET_KEY = 'nfywr45=aovmlsm7vd%0yyd=28ql*a#)4gq37k)r813ts__86y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -78,6 +78,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'unified_profiler',
+        'HOST': 'mongodb://gopikrisna:Password1@ds231242.mlab.com:31242/unified_profiler',
+        'USER': 'gopikrisna',
+        'PASSWORD': 'Password1',
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
