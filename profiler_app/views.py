@@ -8,7 +8,11 @@ from .forms import SignUpForm
 from django.contrib.auth.decorators import login_required
 from .forms import InputUserProfileForm
 from .models import UserProfile, Profile
+from .models import DBPediaPerson, DBPediaPersonData
 from django.contrib.auth.models import User
+# from .dbpedia import insert_dbpedia_data_to_app
+from django.http import HttpResponse
+import json
 
 
 def user_profile_input(request):
@@ -71,6 +75,31 @@ def test(request):
     return render(request, 'human_search_index.html')
 
 
+def dbpedia_to_app(request):
+    # response = insert_dbpedia_data_to_app.dbpedia_to_app()
+    with open('dbpedia_human_data.json') as json_file:
+        data = json.load(json_file)
+        bindings = data['results']['bindings']
+        for rec in bindings:
+            person = DBPediaPerson()
+            person.name = rec['name']['value']
+            person.link = rec['person']['value']
+            person.save()
+    return HttpResponse("response")
+
+
+def dbpedia_to_app_person_data(request):
+    # response = insert_dbpedia_data_to_app.dbpedia_to_app()
+    with open('dbpedia_to_mongo_person_data.json') as json_file:
+        data = json.load(json_file)
+        from pprint import pprint
+        for rec in data:
+            person_data = DBPediaPersonData()
+            person_data.persondata = rec
+            person_data.save()
+    return HttpResponse("response dbpedia_to_app_person_data")
+
+
 def user_profile_redirect(request, username, platform):
     try:
         user = User.objects.get(username=username)
@@ -100,6 +129,7 @@ def user_profile_display(request, username):
 @login_required(login_url='/login/')
 def home(request):
     return render(request, 'home.html')
+
 
 @login_required(login_url='/login/')
 def home_new(request):
@@ -151,9 +181,15 @@ def home_new(request):
             except Exception as e:
                 return render(request, 'home.html')
     form = InputUserProfileForm()
-    user = User.objects.get(username=request.user)
-    user = Profile.objects.get(user_id=user.id)
-    user_profile = UserProfile.objects.get(username_id=user.id)
+    try:
+        user = User.objects.get(username=request.user)
+        print('1: user:', user, vars(user))
+        user = Profile.objects.get(user_id=user.id)
+        print('2: user:', user, vars(user))
+        user_profile = UserProfile.objects.get(username_id=user.id)
+        print('3: user_profile:', user_profile, vars(user_profile))
+    except Exception as e:
+        return render(request, 'home_new.html', {'form': form, 'name': request.user, "user_data": {}})
     print(vars(user_profile))
     user_profile_data = vars(user_profile)
     remove_items = ['_state', 'id', 'username_id', 'name']
@@ -178,4 +214,4 @@ def signup(request):
             return redirect('home')
     else:
         form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+    return render

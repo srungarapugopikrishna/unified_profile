@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.db import models
+from jsonfield import JSONField
 
 
 class Profile(models.Model):
@@ -30,6 +30,15 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class DBPediaPerson(models.Model):
+    name = models.CharField(max_length=100, null=False)
+    link = models.CharField(max_length=500, null=False)
+
+
+class DBPediaPersonData(models.Model):
+    persondata = JSONField()
 
 
 @receiver(post_save, sender=User)

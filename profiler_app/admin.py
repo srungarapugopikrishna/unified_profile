@@ -7,7 +7,10 @@ from django.contrib import admin
 # from .models import update_user_profile
 from .models import Profile
 from .models import UserProfile
-
+from .models import DBPediaPersonData
+from .models import DBPediaPerson
 
 admin.site.register(Profile)
 admin.site.register(UserProfile)
+admin.site.register(DBPediaPersonData)
+admin.site.register(DBPediaPerson)
