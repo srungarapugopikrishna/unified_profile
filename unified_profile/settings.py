@@ -76,13 +76,13 @@ WSGI_APPLICATION = 'unified_profile.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'unified_profiler',
-        'HOST': 'mongodb://gopikrisna:Password1@ds231242.mlab.com:31242/unified_profiler',
-        'USER': 'gopikrisna',
-        'PASSWORD': 'Password1',
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'ENGINE': 'djongo',
+        # 'NAME': 'unified_profiler',
+        # 'HOST': 'mongodb://gopikrisna:Password1@ds231242.mlab.com:31242/unified_profiler',
+        # 'USER': 'gopikrisna',
+        # 'PASSWORD': 'Password1',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 

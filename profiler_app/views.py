@@ -67,7 +67,7 @@ def user_profile_input(request):
 
 def human_search(request):
     if request.method == 'POST':
-        return render(request, 'home.html')
+        return render(request, 'list_humans.html')
     return render(request, 'human_search_index.html')
 
 
